@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   document.getElementById("logPopup").addEventListener("click", async (e) => {
     const popup = e.currentTarget;
+    popup.classList.add("hidden")
     const roomId = popup.dataset.roomId;
     const pageSize = popup.dataset.pageSize;
     console.log("Pagesize:: ", pageSize);
