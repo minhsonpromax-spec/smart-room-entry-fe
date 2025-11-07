@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       console.log("Data:: ", data);
-      return data.data.page; // giả sử API trả về { page: 3 }
+      return data.page;
     } catch (error) {
       console.error("Đã có lỗi xảy ra vui lòng thử lại", error);
       return null;
