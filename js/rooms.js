@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Tự ẩn sau 5 giây
     setTimeout(() => {
       popup.classList.add("hidden");
-    }, 10000);
+    }, 20000);
   }
   document.getElementById("logPopup").addEventListener("click", async (e) => {
     const popup = e.currentTarget;
