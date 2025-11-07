@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pageSize: pageSize,
       });
       const res = await fetch(
-        `${baseUrl}/rooms/find-pages/${params.toString()}`,
+        `${baseUrl}/rooms/find-pages?${params.toString()}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       console.log("Data:: ", data);
-      return data.page; // giả sử API trả về { page: 3 }
+      return data.data.page; // giả sử API trả về { page: 3 }
     } catch (error) {
       console.error("Đã có lỗi xảy ra vui lòng thử lại", error);
       return null;
@@ -474,14 +474,13 @@ document.addEventListener("DOMContentLoaded", () => {
   socket.on("connect", () => console.log("✅ Socket connected"));
   socket.on("newLog", (roomUpdated) => {
     if (!roomUpdated || !roomUpdated.id) return;
-    if (currentPage === 1) {
-      const index = currentData.findIndex((item) => item.id == roomUpdated.id);
-      if (index != -1) {
-        currentData[index] = {
-          ...currentData[index],
-          ...roomUpdated,
-        };
-      }
+
+    const index = currentData.findIndex((item) => item.id == roomUpdated.id);
+    if (index != -1) {
+      currentData[index] = {
+        ...currentData[index],
+        ...roomUpdated,
+      };
       renderTable(currentData);
     } else {
       const message = `Số lượng người hiện tại trong phòng ${roomUpdated.roomNumber} đã cập nhập. Nhấp vào để xem.`;
