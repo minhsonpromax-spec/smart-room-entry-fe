@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lịch sử ra vào nhà trọ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+</head>
+<body class="bg-gray-50 flex h-screen text-gray-800">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gradient-to-b from-blue-600 to-indigo-700 text-white flex flex-col">
+    <div class="px-6 py-5 flex items-center space-x-2 text-xl font-semibold border-b border-white/10">
+      <i class="fa-solid fa-building-user text-white"></i>
+      <span>SMART COUNTER</span>
+    </div>
+
+    <nav class="flex-1 px-4 py-6 space-y-2">
+      <a href="/pages/log-access.html" class="flex items-center px-4 py-2 rounded-lg bg-white/10 transition">
+        <i class="fa-solid fa-clock-rotate-left mr-3"></i> Lịch sử ra vào
+      </a>
+      <a href="/pages/room.html" class="flex items-center px-4 py-2 rounded-lg hover:bg-white/10 transition">
+        <i class="fa-solid fa-door-open mr-3"></i> Phòng
+      </a>
+      <a href="#" class="flex items-center px-4 py-2 rounded-lg hover:bg-white/10 transition">
+        <i class="fa-solid fa-gear mr-3"></i> Cài đặt
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col">
+    <!-- Header -->
+    <header class="flex justify-between items-center bg-white px-6 py-3 shadow-sm border-b">
+      <div>
+      </div>
+      <div class="flex items-center space-x-6 relative">
+        <button id="notifyBtn" class="relative">
+          <i class="fa-regular fa-bell text-gray-600 text-xl hover:text-blue-600"></i>
+          <span id="notifyCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">0</span>
+        </button>
+        <div
+          id="notifyList"
+          class="absolute right-0 mt-10 w-80 bg-white shadow-xl rounded-lg hidden max-h-96 overflow-y-auto border border-gray-200 z-50 top-2"
+        >
+          <div id="notifyContainer" class="divide-y divide-gray-100"></div>
+          <div id="loading" class="text-center py-2 text-gray-500 hidden">Đang tải...</div>
+        </div>
+        <div class="relative">
+          <button id="userMenuBtn" class="flex items-center space-x-2 focus:outline-none">
+            <img src="../public/images/avatar_default.png" class="w-9 h-9 rounded-full border" alt="User" />
+            <div>
+                <p id="accountName" class="font-medium">Unknown</p>
+                <p id="accountRole" class="text-sm text-gray-500">Unknown</p>
+            </div>
+            <i class="fa-solid fa-chevron-down text-gray-500 text-sm"></i>
+          </button>
+          <div id="userDropdown" class="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg border hidden">
+            <ul class="text-gray-700">
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100"><i class="fa-solid fa-user mr-2"></i>Trang cá nhân</a></li>
+              <li><button id="logoutBtn" class="w-full text-left px-4 py-2 hover:bg-gray-100"><i class="fa-solid fa-right-from-bracket mr-2"></i>Đăng xuất</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <main class="p-6 overflow-y-auto flex-1 space-y-6">
+      <h2 class="text-2xl font-semibold mb-6">Lịch sử ra vào</h2>
+    <div class="bg-white p-4 rounded-2xl shadow-md flex flex-wrap items-center gap-4 justify-between">
+    <!-- Filter theo ngày -->
+    <div class="flex items-center gap-2">
+      <div class="">
+      <label for="startDate" class="text-sm text-gray-700">Từ ngày:</label>
+      <input
+        type="datetime-local"
+        id="startDateLog"
+        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+    </div>
+    <div class="flex items-center gap-2">
+      <label for="endDate" class="text-sm text-gray-700">Đến ngày:</label>
+      <input
+        type="datetime-local"
+        id="endDateLog"
+        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+    </div>
+    <!-- Filter phương thức mở cửa -->
+    <div class="flex items-center gap-2">
+      <label for="unlockMethod" class="text-sm text-gray-700">Phương thức:</label>
+      <select
+        id="unlockMethod"
+        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+      >
+        <option value="">Tất cả</option>
+        <option value="CARD">Thẻ từ</option>
+        <option value="FINGERPRINT">Vân tay</option>
+        <option value="PASSWORD">Mật khẩu</option>
+      </select>
+    </div>
+    </div>
+    <div>
+       <div class="flex items-center gap-2">
+      <label for="pageSizeSelect" class="text-sm text-gray-700">Số lượng dòng</label>
+      <select
+        id="pageSizeSelect"
+        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+      >
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="40">40</option>
+        <option value="60">60</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+    </div>
+  </div>
+     <div class="">
+      <p class="font-semibold mb-2">Tìm kiếm</p>
+        <input id="searchBoxLog" type="text" placeholder="Tìm kiếm theo số phòng, tên định danh khoá.."
+               class="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-200 outline-none w-96" />
+      </div>
+         <div class="overflow-x-auto bg-white rounded-2xl shadow-md">
+        <table class="min-w-full text-sm text-left border-collapse">
+          <thead class="bg-gray-100 text-gray-700 uppercase">
+            <tr>
+              <th class="px-6 py-3">ID</th>
+              <th class="px-6 py-3">Mã phòng</th>
+              <th class="px-6 py-3">Tên định danh khoá</th>
+              <th class="px-6 py-3">Số người vào</th>
+              <th class="px-6 py-3">Số người ra</th>
+              <th class="px-6 py-3">Phương thức mở cửa</th>
+              <th class="px-6 py-3">Ghi chú</th>
+              <th class="px-6 py-3">Thời gian</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody" class="divide-y divide-gray-200">
+            <!-- Dữ liệu render bằng JS -->
+          </tbody>
+        </table>
+          </div>
+          <div id="pagination" class="flex items-center justify-center gap-2 mt-6 select-none">
+            <!-- Pagination buttons sẽ được render bằng JS -->
+          </div>
+    </main>
+    <div id="logPopup" class="fixed top-20 right-5 hidden w-80 bg-white shadow-lg border border-gray-200 rounded-lg p-4 z-50">
+  <div class="flex justify-between items-start cursor-pointer">
+    <div>
+      <p class="text-gray-800 font-semibold">Thông báo mới</p>
+      <p id="logMessage" class="text-gray-600 text-sm mt-1">Nội dung log sẽ hiển thị ở đây.</p>
+    </div>
+    <button id="closePopup" class="text-gray-400 hover:text-gray-600 ml-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M10 8.586l4.95-4.95a1 1 0 111.414 1.414L11.414 10l4.95 4.95a1 1 0 01-1.414 1.414L10 11.414l-4.95 4.95a1 1 0 01-1.414-1.414L8.586 10l-4.95-4.95a1 1 0 011.414-1.414L10 8.586z" clip-rule="evenodd" />
+      </svg>
+    </button>
+  </div>
+    </div>
+    <div id="spinnerOverlay" class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center hidden z-50 transition-opacity duration-300">
+      <div class="w-16 h-16 border-4 border-t-blue-500 border-gray-200 rounded-full animate-spin"></div>
+    </div>
+  </div>
+
+  <script src="../js/navigator.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/access-log.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+</body>
+</html>

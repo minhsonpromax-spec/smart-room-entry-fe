@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="manifest" href="../setup/manifest.json" />
+<meta name="theme-color" content="#2563eb" />
+<link rel="icon" href="../public/images/icon_192x192.png" type="image/png" />
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+  <!-- Container -->
+  <div class="w-full max-w-md sm:max-w-sm bg-white rounded-2xl shadow-xl p-6 sm:p-8 transition-all">
+    <!-- Title -->
+    <h1 class="text-xl sm:text-2xl font-semibold text-gray-800 text-center mb-6">Đăng nhập</h1>
+
+    <!-- Form -->
+    <form id="loginForm" class="space-y-4 sm:space-y-5">
+      <!-- Username -->
+      <div>
+        <input
+          type="text"
+          id="userName"
+          placeholder="Tên tài khoản"
+          class="w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition"
+        />
+        <p id="userNameError" class="text-red-500 text-xs sm:text-sm mt-1 hidden">Tên tài khoản không được để trống</p>
+      </div>
+
+      <!-- Password -->
+      <div class="relative">
+        <input
+          type="password"
+          id="password"
+          placeholder="Mật khẩu"
+          class="w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition"
+        />
+        <p id="passwordError" class="text-red-500 text-xs sm:text-sm mt-1 hidden">Mật khẩu không được để trống</p>
+      </div>
+
+      <!-- Button -->
+      <button
+        type="submit"
+        class="w-full py-2 sm:py-3 text-sm sm:text-base bg-blue-500 text-white font-medium rounded-lg shadow-sm hover:bg-blue-600 transition"
+      >
+        Đăng nhập
+      </button>
+    </form>
+
+    <!-- Error -->
+    <p id="serverError" class="text-red-500 text-center text-sm sm:text-base mt-4 hidden"></p>
+  </div>
+
+  <!-- Toastify -->
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="../js/register-woker.js"></script>
+  <script src="../js/push-subscription.js"></script>
+  <script src="../js/login.js"></script>
+</body>
+</html>
