@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
+      console.log("Data:: ", data);
       return data.page; // giả sử API trả về { page: 3 }
     } catch (error) {
       console.error("Đã có lỗi xảy ra vui lòng thử lại", error);
@@ -61,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const popup = e.currentTarget;
     const roomId = popup.dataset.roomId;
     const pageSize = popup.dataset.pageSize;
+    console.log("Pagesize:: ", pageSize);
     const targetPage = await getPageByRoomId(roomId, pageSize);
     if (targetPage) {
       currentPage = targetPage;
